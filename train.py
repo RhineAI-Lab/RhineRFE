@@ -10,12 +10,13 @@ from datasets import load_dataset
 
 # Config
 MODEL_PATH = "./model/Qwen/Qwen2___5-0___5B-Instruct"
-DATASET_PATH = "./dataset/sharegpt_gpt4"
+# DATASET_PATH = "./dataset/sharegpt_gpt4"
+DATASET_PATH = "ag_news"
 
 
 # Dataset
-tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-cased")
-raw_datasets = load_dataset("ag_news")
+tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
+raw_datasets = load_dataset(DATASET_PATH)
 
 def tokenize_function(example):
     return tokenizer(example["text"], padding="max_length", truncation=True)
@@ -34,7 +35,7 @@ eval_dataloader = DataLoader(small_eval_dataset, batch_size=8)
 
 
 # Model
-model = AutoModelForSequenceClassification.from_pretrained("google-bert/bert-base-cased", num_labels=4)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH, num_labels=4)
 
 
 # Optimizer
