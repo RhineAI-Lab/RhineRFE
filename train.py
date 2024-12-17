@@ -60,7 +60,7 @@ for epoch in range(num_epochs):
         outputs = model(**batch)
         loss = outputs.loss
         loss.backward()
-
+        
         optimizer.step()
         lr_scheduler.step()
         optimizer.zero_grad()
@@ -75,7 +75,7 @@ for batch in eval_dataloader:
     batch = {k: v.to(device) for k, v in batch.items()}
     with torch.no_grad():
         outputs = model(**batch)
-
+    
     logits = outputs.logits
     predictions = torch.argmax(logits, dim=-1)
     metric.add_batch(predictions=predictions, references=batch["labels"])
